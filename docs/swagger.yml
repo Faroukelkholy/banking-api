@@ -1,0 +1,138 @@
+openapi: 3.0.2
+info:
+  title: bank
+  version: 1.0.0
+paths:
+  /customers/id/accounts:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/account'
+        required: true
+      tags:
+        - customers
+      responses:
+        '201':
+          description: Created
+      summary: Create an account for a customer
+  /accounts/id/transcations/:
+    get:
+      tags:
+        - accounts
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+          description: success
+      summary: List transaction history for an account
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transfer'
+        required: true
+      tags:
+        - accounts
+      responses:
+        '201':
+          description: created
+      summary: make a transfer between 2 accounts
+  /accounts/id:
+    get:
+      tags:
+        - accounts
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+              examples:
+                account details:
+                  value:
+                    id: 24
+                    name: current
+                    balance: 88
+          description: success
+      summary: Get account details like its balance and name.
+components:
+  schemas:
+    account:
+      title: Root Type for account
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        balance:
+          format: int32
+          type: integer
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/transaction'
+      example:
+        id: 123e4567-e89b-12d3-a456-426614174000
+        name: current
+        balance: 1500
+        transactions:
+          -
+            sender: Arisha Barron
+            receiver: Branden Gibson
+            balance: 500
+    transaction:
+      title: Root Type for transaction
+      description: ''
+      type: object
+      properties:
+        sender:
+          type: string
+        receiver:
+          type: string
+        balance:
+          format: int32
+          type: integer
+      example:
+        sender: Arisha Barron
+        receiver: Branden Gibson
+        balance: 500
+    transfer:
+      title: Root Type for transfer
+      description: ''
+      type: object
+      properties:
+        sender:
+          type: string
+        receiver:
+          type: string
+        balance:
+          format: int32
+          type: integer
+      example:
+        sender: 123e4567-e89b-12d3-a456-426614174000
+        receiver: 223e4567-e89b-12d3-a456-426614174000
+        balance: 500
+    customer:
+      title: Root Type for customer
+      description: ''
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          type: string
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/account'
+      example:
+        id: 123e4567-e89b-12d3-a456-426614174000
+        name: Arisha Barron
