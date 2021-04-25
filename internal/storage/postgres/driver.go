@@ -25,6 +25,7 @@ type Options struct {
 type Driver struct {
 	DB *pg.DB
 	storage.AccountRepository
+	storage.CustomerRepository
 }
 
 //New return repos instance
@@ -34,6 +35,7 @@ func New(opt *Options) (storage.Repository, error) {
 		return nil, err
 	}
 	d.AccountRepository = NewAccountRepo(d.DB)
+	d.CustomerRepository = NewCustomerRepo(d.DB)
 	return d, nil
 }
 
