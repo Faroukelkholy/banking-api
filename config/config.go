@@ -30,4 +30,3 @@ func Parse() *Config {
 	}
 	return &cfg
 }
-
