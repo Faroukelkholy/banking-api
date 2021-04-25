@@ -1,0 +1,37 @@
+version: '3.6'
+services:
+  bank_go:
+    restart: always
+    build:
+      dockerfile: deploy/golang.Dockerfile
+      context: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/go/src/bank
+    links:
+      - bank_postgres
+    depends_on:
+      - bank_postgres
+    networks:
+      - bank
+
+  bank_postgres:
+    restart: always
+    build:
+      dockerfile: deploy/postgres.Dockerfile
+      context: .
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=bank_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - ./migration:/go/src/bank/migrations
+    networks:
+      - bank
+
+networks:
+  bank:
+    name: bank

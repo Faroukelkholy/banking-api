@@ -1,0 +1,4 @@
+github.com/JeremyLoy/config v1.3.0 h1:EQgVA/owXB7thqhe3ec3Q7P29USfB57NIzqcp8Rgg0Y=
+github.com/JeremyLoy/config v1.3.0/go.mod h1:YcGKcrAs8JJ0AEjPLWL3mCpXWgtuguf9G8WE5H/pLe0=
+github.com/joho/godotenv v1.3.0 h1:Zjp+RcGpHhGlrMbJzXTrZZPrWj+1vfm90La1wgB6Bhc=
+github.com/joho/godotenv v1.3.0/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
