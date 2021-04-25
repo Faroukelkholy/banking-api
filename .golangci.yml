@@ -82,7 +82,7 @@ linters:
     #    - goconst
     #    - gocritic
     #    - gocyclo
-    - gofmt
+#    - gofmt
     #    - goimports
     # golint is go fmt with automatic reformating
     - golint
