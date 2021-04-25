@@ -34,6 +34,7 @@ func (srv *Server) init() {
 //AddRoutesAS mount routes related to account service
 func (srv *Server) AddRoutesAS(s account.Service) {
 	srv.echo.GET("/accounts/:id", GAHandler(s))
+	srv.echo.GET("/accounts/:id/transactions", GATsHandler(s))
 }
 
 //AddRoutesCS mount routes related to customer service

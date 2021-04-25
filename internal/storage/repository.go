@@ -18,4 +18,5 @@ type CustomerRepository interface {
 
 type TransactionRepository interface {
 	CreateTransaction(t *models.Transfer) error
+	GetAccountTransactions(accountID string) ([]*Transaction, error)
 }

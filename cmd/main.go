@@ -26,7 +26,7 @@ func main() {
 	}
 
 	srv := server.New()
-	srv.AddRoutesAS(account.New(repo))
+	srv.AddRoutesAS(account.New(repo, repo))
 	srv.AddRoutesCS(customer.New(repo))
 	srv.AddRoutesTS(transaction.New(repo))
 

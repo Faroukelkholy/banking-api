@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: bank
+  title: bank-api
   version: 1.0.0
 paths:
   /customers/id/accounts:
@@ -29,19 +29,6 @@ paths:
                 $ref: '#/components/schemas/account'
           description: success
       summary: List transaction history for an account
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/transfer'
-        required: true
-      tags:
-        - accounts
-      responses:
-        '201':
-          description: created
-      summary: make a transfer between 2 accounts
   /accounts/id:
     get:
       tags:
@@ -60,6 +47,20 @@ paths:
                     balance: 88
           description: success
       summary: Get account details like its balance and name.
+  /transactions:
+    post:
+      requestBody:
+        content:
+          application/json:
+            scehma:
+              $ref: '#/components/schemas/transfer'
+        required: true
+      tags:
+        - transactions
+      responses:
+        '201':
+          description: created
+      summary: make a transfer between 2 accounts
 components:
   schemas:
     account:

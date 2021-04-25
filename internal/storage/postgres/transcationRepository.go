@@ -52,3 +52,11 @@ func (repo *TransactionRepository) CreateTransaction(t *models.Transfer) error {
 
 	return err
 }
+
+func (repo *TransactionRepository) GetAccountTransactions(accountID string) (ts []*storage.Transaction, err error) {
+	if err = repo.DB.Model(&ts).Relation("Sender.Customer").Relation("Receiver.Customer").Where("sender_id = ?", accountID).WhereOr("receiver_id = ?", accountID).Select(); err == pg.ErrNoRows {
+		return nil, nil
+	}
+	return ts, err
+}
+
