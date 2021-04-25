@@ -6,6 +6,7 @@ import (
 	"github.com/faroukelkholy/bank/config"
 	"github.com/faroukelkholy/bank/internal/server"
 	"github.com/faroukelkholy/bank/internal/service/account"
+	"github.com/faroukelkholy/bank/internal/service/customer"
 	"github.com/faroukelkholy/bank/internal/storage/postgres"
 )
 
@@ -25,6 +26,7 @@ func main() {
 
 	srv := server.New()
 	srv.AddRoutesAS(account.New(repo))
+	srv.AddRoutesCS(customer.New(repo))
 
 	if err = srv.Start(fmt.Sprintf(":%s", config.Parse().HTTPPort)); err != nil {
 		panic(err)
