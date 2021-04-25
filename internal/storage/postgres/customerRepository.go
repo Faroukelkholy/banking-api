@@ -1,6 +1,8 @@
 package postgres
 
 import (
+	"errors"
+
 	"github.com/faroukelkholy/bank/internal/service/models"
 	"github.com/faroukelkholy/bank/internal/storage"
 	"github.com/go-pg/pg/v10"
@@ -25,7 +27,11 @@ func (repo *CustomerRepository) CreateCustomerAccount(id string, account *models
 		Balance:    account.Balance,
 		CustomerID: id,
 	}
-	_, err := repo.DB.Model(ca).Insert()
-	return err
+	if _, err := repo.DB.Model(ca).Insert(); err != nil {
+		if IsViolateFK(err.Error()) {
+			return errors.New(NoCustomerID)
+		}
+		return err
+	}
+	return nil
 }
-
