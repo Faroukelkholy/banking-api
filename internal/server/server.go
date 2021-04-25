@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/faroukelkholy/bank/internal/service/account"
 	"github.com/faroukelkholy/bank/internal/service/customer"
+	"github.com/faroukelkholy/bank/internal/service/transaction"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -38,4 +39,9 @@ func (srv *Server) AddRoutesAS(s account.Service) {
 //AddRoutesCS mount routes related to customer service
 func (srv *Server) AddRoutesCS(s customer.Service) {
 	srv.echo.POST("/customers/:id/accounts", CCAHandler(s))
+}
+
+//AddRoutesTS mount routes related to customer service
+func (srv *Server) AddRoutesTS(s transaction.Service) {
+	srv.echo.POST("/transactions", CTHandler(s))
 }
