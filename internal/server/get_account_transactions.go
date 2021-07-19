@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/faroukelkholy/bank/internal/service/account"
 	"github.com/labstack/echo/v4"
+
+	"github.com/faroukelkholy/bank/internal/service/account"
 )
 
 func GATsHandler(srv account.Service) echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
-		result, err := srv.GetTransactions(c.Param("id"))
+		result, err := srv.GetAccountTransactions(c.Param("id"))
 		if err != nil {
 			fmt.Println("err execute service ", err)
 			return c.JSON(http.StatusInternalServerError, HTTPResponse{
@@ -38,4 +39,3 @@ func GATsHandler(srv account.Service) echo.HandlerFunc {
 		})
 	}
 }
-

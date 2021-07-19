@@ -10,14 +10,22 @@ type Service interface {
 }
 
 type service struct {
-	repo storage.CustomerRepository
+	repo storage.Repository
 }
 
-func New(repo storage.CustomerRepository) Service {
+func New(repo storage.Repository) Service {
 	return &service{repo: repo}
 }
 
 func (s *service) CreateCustomerAccount(id string, account *models.Account) error {
-	return s.repo.CreateCustomerAccount(id, account)
+	acc := serializeCCA(account)
+	return s.repo.CreateCustomerAccount(id, acc)
 }
 
+// serializeCCA translate transaction data structure from the service to the repository
+func serializeCCA(acc *models.Account) *storage.Account {
+	return &storage.Account{
+		Name: acc.Name,
+		Balance: acc.Balance,
+	}
+}

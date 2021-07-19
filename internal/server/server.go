@@ -1,11 +1,12 @@
 package server
 
 import (
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+
 	"github.com/faroukelkholy/bank/internal/service/account"
 	"github.com/faroukelkholy/bank/internal/service/customer"
 	"github.com/faroukelkholy/bank/internal/service/transaction"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 //Server struct holds echo instance that holds all mounted routes

@@ -3,9 +3,9 @@ package postgres
 import (
 	"errors"
 
-	"github.com/faroukelkholy/bank/internal/service/models"
-	"github.com/faroukelkholy/bank/internal/storage"
 	"github.com/go-pg/pg/v10"
+
+	"github.com/faroukelkholy/bank/internal/storage"
 )
 
 type CustomerRepository struct {
@@ -21,17 +21,19 @@ func (repo *CustomerRepository) GetCustomers() (cs []*storage.Customer, err erro
 	return cs, err
 }
 
-func (repo *CustomerRepository) CreateCustomerAccount(id string, account *models.Account) error {
-	ca := &storage.Account{
+func (repo *CustomerRepository) CreateCustomerAccount(id string, account *storage.Account) error {
+	acc := &storage.Account{
 		Name:       account.Name,
 		Balance:    account.Balance,
 		CustomerID: id,
 	}
-	if _, err := repo.DB.Model(ca).Insert(); err != nil {
+
+	if _, err := repo.DB.Model(acc).Insert(); err != nil {
 		if IsViolateFK(err.Error()) {
 			return errors.New(NoCustomerID)
 		}
 		return err
 	}
+
 	return nil
 }

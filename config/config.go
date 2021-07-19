@@ -1,6 +1,8 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/JeremyLoy/config"
 	"github.com/joho/godotenv"
 )
@@ -17,16 +19,16 @@ type Config struct {
 	DBSchema   string
 }
 
-var cfg Config
-
-func Parse() *Config {
-	errGodot := godotenv.Load()
-	if errGodot != nil {
-		panic("Error loading .env file")
-	}
-	err := config.FromEnv().To(&cfg)
+func Parse() (cfg Config) {
+	err := godotenv.Load()
 	if err != nil {
-		panic(err)
+		fmt.Println("Error loading .env file")
 	}
-	return &cfg
+
+	err = config.FromEnv().To(&cfg)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return cfg
 }

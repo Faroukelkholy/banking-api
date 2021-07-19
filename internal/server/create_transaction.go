@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/labstack/echo/v4"
+
 	"github.com/faroukelkholy/bank/internal/service/models"
 	"github.com/faroukelkholy/bank/internal/service/transaction"
 	"github.com/faroukelkholy/bank/internal/storage/postgres"
-	"github.com/labstack/echo/v4"
 )
 
 func CTHandler(srv transaction.Service) echo.HandlerFunc {

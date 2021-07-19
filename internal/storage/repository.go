@@ -1,7 +1,5 @@
 package storage
 
-import "github.com/faroukelkholy/bank/internal/service/models"
-
 type Repository interface {
 	AccountRepository
 	CustomerRepository
@@ -13,10 +11,10 @@ type AccountRepository interface {
 }
 
 type CustomerRepository interface {
-	CreateCustomerAccount(id string, account *models.Account) error
+	CreateCustomerAccount(id string, account *Account) error
 }
 
 type TransactionRepository interface {
-	CreateTransaction(t *models.Transfer) error
+	CreateTransaction(t *Transaction) error
 	GetAccountTransactions(accountID string) ([]*Transaction, error)
 }

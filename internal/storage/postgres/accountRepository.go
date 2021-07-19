@@ -1,8 +1,9 @@
 package postgres
 
 import (
-	"github.com/faroukelkholy/bank/internal/storage"
 	"github.com/go-pg/pg/v10"
+
+	"github.com/faroukelkholy/bank/internal/storage"
 )
 
 type AccountRepository struct {

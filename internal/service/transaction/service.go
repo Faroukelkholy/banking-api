@@ -11,18 +11,27 @@ type Service interface {
 
 //service struct implement the Service interface
 type service struct {
-	repo storage.TransactionRepository
+	repo storage.Repository
 }
 
-func New(repo storage.TransactionRepository) Service {
+func New(repo storage.Repository) Service {
 	return &service{repo: repo}
 }
 
-
 func (s *service) CreateTransaction(t *models.Transfer) (err error) {
 	if err = t.Validate(); err != nil {
-		return err
+		return
 	}
-	return s.repo.CreateTransaction(t)
+
+	trans := serializeCT(t)
+	return s.repo.CreateTransaction(trans)
 }
 
+// serializeCT translate transaction data structure from the service to the repository
+func serializeCT(t *models.Transfer) *storage.Transaction {
+	return &storage.Transaction{
+		 SenderID: t.Sender,
+		 ReceiverID: t.Receiver,
+		 Amount: t.Amount,
+	}
+}

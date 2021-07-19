@@ -23,27 +23,26 @@ type Options struct {
 // Driver holds db connection
 // repos implementation
 type Driver struct {
-	DB *pg.DB
 	storage.AccountRepository
 	storage.CustomerRepository
 	storage.TransactionRepository
 }
 
 //New return repos instance
-func New(opt *Options) (storage.Repository, error) {
-	d := new(Driver)
-	if err := d.connect(opt); err != nil {
-		return nil, err
+func New(ctx context.Context, opt *Options) (repo storage.Repository, err error) {
+	DB, err := connect(ctx, opt)
+
+	repo = &Driver{
+		AccountRepository:     NewAccountRepo(DB),
+		CustomerRepository:    NewCustomerRepo(DB),
+		TransactionRepository: NewTransactionRepo(DB),
 	}
-	d.AccountRepository = NewAccountRepo(d.DB)
-	d.CustomerRepository = NewCustomerRepo(d.DB)
-	d.TransactionRepository = NewTransactionRepo(d.DB)
-	return d, nil
+	return
 }
 
 //connect hold the db connection code using the provided options
-func (d *Driver) connect(opt *Options) (err error) {
-	d.DB = pg.Connect(&pg.Options{
+func connect(ctx context.Context, opt *Options) (DB *pg.DB, err error) {
+	DB = pg.Connect(&pg.Options{
 		Addr:     fmt.Sprintf("%s:%v", opt.DBHost, opt.DBPort),
 		User:     opt.DBUser,
 		Password: opt.DBPass,
@@ -56,16 +55,13 @@ func (d *Driver) connect(opt *Options) (err error) {
 			return nil
 		},
 	})
-	defer fmt.Println("db connected success")
 
 	if opt.Debug == "dev" {
-		d.DB.AddQueryHook(queryLogger{})
+		DB.AddQueryHook(queryLogger{})
 	}
 
-	if err = d.DB.Ping(context.Background()); err != nil {
-		return err
-	}
-	return nil
+	err = DB.Ping(ctx)
+	return
 }
 
 //queryLogger implements the QueryHook interface that enables a hook to run before and after a query is executed
