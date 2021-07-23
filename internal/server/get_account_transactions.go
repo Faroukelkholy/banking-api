@@ -27,7 +27,7 @@ func GATsHandler(srv account.Service) echo.HandlerFunc {
 			return c.JSON(http.StatusNotFound, HTTPResponse{
 				Data: result,
 				Err: HTTPError{
-					Title:       "account not found",
+					Title:       "transactions not found",
 					Description: "",
 				},
 			})

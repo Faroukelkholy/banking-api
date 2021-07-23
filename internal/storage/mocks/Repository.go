@@ -3,7 +3,6 @@
 package mocks
 
 import (
-	models "github.com/faroukelkholy/bank/internal/service/models"
 	storage "github.com/faroukelkholy/bank/internal/storage"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -14,11 +13,11 @@ type Repository struct {
 }
 
 // CreateCustomerAccount provides a mock function with given fields: id, account
-func (_m *Repository) CreateCustomerAccount(id string, account *models.Account) error {
+func (_m *Repository) CreateCustomerAccount(id string, account *storage.Account) error {
 	ret := _m.Called(id, account)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(string, *models.Account) error); ok {
+	if rf, ok := ret.Get(0).(func(string, *storage.Account) error); ok {
 		r0 = rf(id, account)
 	} else {
 		r0 = ret.Error(0)
@@ -28,11 +27,11 @@ func (_m *Repository) CreateCustomerAccount(id string, account *models.Account) 
 }
 
 // CreateTransaction provides a mock function with given fields: t
-func (_m *Repository) CreateTransaction(t *models.Transfer) error {
+func (_m *Repository) CreateTransaction(t *storage.Transaction) error {
 	ret := _m.Called(t)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(*models.Transfer) error); ok {
+	if rf, ok := ret.Get(0).(func(*storage.Transaction) error); ok {
 		r0 = rf(t)
 	} else {
 		r0 = ret.Error(0)
